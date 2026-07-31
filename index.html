@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don — Full-stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0e1013;
+    --bg-raised: #16191d;
+    --bg-card: #17191d;
+    --line: #26292f;
+    --line-soft: #1d2024;
+    --text: #e7e8ea;
+    --text-dim: #8c9096;
+    --text-faint: #55585f;
+    --amber: #e8a33d;
+    --teal: #5fb3a3;
+    --font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection{ background: var(--amber); color: #1a1204; }
+  a{ color: inherit; text-decoration:none; }
+
+  .wrap{ max-width: 860px; margin:0 auto; padding: 0 24px; }
+
+  /* nav */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(14,16,19,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width: 860px; margin:0 auto; padding: 0 24px;
+    height: 60px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ font-weight:700; font-size: 14px; letter-spacing: 0.01em; }
+  .brand .dot{ color: var(--amber); }
+  .nav-links{ display:flex; gap: 28px; }
+  .nav-links a{ font-size: 12.5px; color: var(--text-dim); letter-spacing: 0.03em; }
+  .nav-links a:hover{ color: var(--text); }
+  @media (max-width: 560px){ .nav-links{ gap:16px; } .nav-links a{ font-size:11px; } }
+
+  /* hero */
+  .hero{ padding: 96px 0 80px; }
+  .eyebrow{
+    font-size: 12px; color: var(--teal); letter-spacing: 0.08em;
+    display:flex; align-items:center; gap:10px; margin-bottom: 22px;
+  }
+  .eyebrow .bar{ width: 24px; height: 1px; background: var(--teal); }
+
+  h1{
+    font-size: clamp(34px, 6vw, 54px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  h1 .accent{ color: var(--amber); }
+
+  .hero-sub{
+    margin-top: 22px; max-width: 56ch;
+    color: var(--text-dim); font-size: 15.5px;
+  }
+
+  .cta-row{ display:flex; gap:14px; margin-top: 34px; flex-wrap:wrap; }
+  .btn{
+    font-family: var(--font);
+    font-size: 13px; font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .btn.primary{ background: var(--amber); color: #1a1204; border-color: var(--amber); }
+  .btn.primary:hover{ background: #f0b357; }
+  .btn.ghost{ color: var(--text); }
+  .btn.ghost:hover{ border-color: var(--text-dim); }
+
+  .hero-meta{
+    margin-top: 56px; display:flex; gap: 40px; flex-wrap:wrap;
+    padding-top: 28px; border-top: 1px solid var(--line-soft);
+  }
+  .meta-item .num{ font-size: 20px; font-weight:700; color: var(--amber); }
+  .meta-item .lab{ font-size: 11.5px; color: var(--text-faint); margin-top: 4px; letter-spacing: 0.03em; }
+
+  /* section shell */
+  section{ padding: 72px 0 30px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head{ margin-bottom: 40px; }
+  .sec-num{ font-size: 12px; color: var(--text-faint); letter-spacing: 0.08em; margin-bottom: 8px; }
+  .sec-title{ font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  .about-text p{ color: var(--text-dim); margin-bottom: 16px; font-size: 15px; }
+  .about-text .hl{ color: var(--text); }
+
+  .facts{ align-self:start; }
+  .facts .row{
+    display:flex; justify-content:space-between; gap:16px;
+    font-size: 13px; padding: 12px 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .facts .row:first-child{ padding-top:0; }
+  .facts .k{ color: var(--text-faint); }
+  .facts .v{ color: var(--text); text-align:right; }
+
+  @media (max-width: 680px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  /* skills */
+  .skill-groups{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 32px 48px; }
+  .skill-group .label{
+    font-size: 11.5px; color: var(--teal); letter-spacing: 0.08em; margin-bottom: 14px;
+  }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap: 9px; }
+  .skill-tag{
+    font-size: 12.5px; padding: 6px 12px; border-radius: 3px;
+    background: var(--bg-raised); border: 1px solid var(--line); color: var(--text-dim);
+  }
+  @media (max-width: 680px){ .skill-groups{ grid-template-columns: 1fr; } }
+
+  /* projects */
+  .proj-list{ display:flex; flex-direction:column; }
+  .proj{
+    display:grid; grid-template-columns: 220px 1fr auto;
+    gap: 24px; align-items:start;
+    padding: 28px 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .proj:first-child{ padding-top: 0; }
+  .proj-name{ font-size: 16px; font-weight:700; }
+  .proj-status{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.02em;
+  }
+  .proj-status .dot{ width:6px; height:6px; border-radius:50%; background: var(--text-faint); }
+  .proj-status.live .dot{ background: var(--teal); }
+  .proj-status.live{ color: var(--teal); }
+  .proj-status.trading .dot{ background: var(--amber); }
+  .proj-status.trading{ color: var(--amber); }
+
+  .proj-desc{ color: var(--text-dim); font-size: 14px; }
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 12px; }
+  .proj-tags span{ font-size: 11px; color: var(--text-faint); }
+  .proj-tags span:not(:last-child)::after{ content: '·'; margin-left: 8px; color: var(--text-faint); }
+
+  .proj-idx{ font-size: 12px; color: var(--text-faint); }
+
+  @media (max-width: 680px){
+    .proj{ grid-template-columns: 1fr; gap: 8px; }
+    .proj-idx{ display:none; }
+  }
+
+  /* contact */
+  .contact-box{
+    background: var(--bg-raised); border: 1px solid var(--line);
+    border-radius: 6px; padding: 44px 40px;
+    display:flex; align-items:center; justify-content:space-between; gap: 32px; flex-wrap:wrap;
+  }
+  .contact-box h3{ font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .contact-box p{ color: var(--text-dim); font-size: 14px; max-width: 40ch; }
+  .contact-links{ display:flex; flex-direction:column; gap: 10px; }
+  .contact-links a{ font-size: 13.5px; color: var(--amber); }
+  .contact-links a:hover{ text-decoration: underline; }
+  .contact-links .field{ color: var(--text-faint); margin-right: 6px; }
+
+  footer{ padding: 32px 0 60px; text-align:center; color: var(--text-faint); font-size: 11.5px; }
+
+  :focus-visible{ outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">plug<span class="dot">.</span>dev</div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero" id="home">
+    <div class="eyebrow"></span>Web developer · thailand</div>
+    <h1>My <span class="accent">Portfolio</span></h1>
+    <p class="hero-sub">
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+
+    <!-- <div class="hero-meta">
+      <div class="meta-item"><div class="num">5</div><div class="lab">active projects</div></div>
+      <div class="meta-item"><div class="num">4</div><div class="lab">MQL5 trading EAs</div></div>
+      <div class="meta-item"><div class="num">1</div><div class="lab">live storefront</div></div>
+    </div> -->
+  </div>
+
+  <section id="about">
+    <div class="sec-head">
+      <div class="sec-num">01 · about</div>
+      <div class="sec-title">Who I am</div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+            สวัสดีครับผมชื่อ ภูวดล สุวรรณรัตน์ ชื่อเล่น ปลั๊ก ผมเพิ่งเรียนจบจาก มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ ผมมีความสนใจด้านการพัฒนาซอฟต์แวร์ และเว็บไซต์ โดยเฉพาะการเขียนโปรแกรมและ
+            การออกแบบระบบ ก่อนจบปีสี่เทอมสองผมเคยฝึกงานในโครงการสหกิจศึกษา เป็นเวลาสี่เดือนที่บริษัท
+            codemonday ผมได้ทํางานในตําแหน่ง software developer ทําเว็บไซต์เกี่ยวกับประกันการท่องเที่ยว ร่วมกับพี่ๆ
+            ในทีม ผมได้ทําทั้ง frontend และ backend ได้พัฒนา features ต่างๆในระบบรวมถึงการแก้ปัญหาที่ผู้ใช้เจอภายในระบบประกัน
+        </p>
+      </div>
+      <div class="facts">
+        <div class="row"><span class="k">Location</span><span class="v">Thailand</span></div>
+        <div class="row"><span class="k">Level</span><span class="v">Junior developer</span></div>
+        <div class="row"><span class="k">Primary stack</span><span class="v">Next.js / Nest.js</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head">
+      <div class="sec-num">02 · skills</div>
+      <div class="sec-title">Tools I use</div>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="label">FRONTEND</div>
+        <div class="skill-tags">
+          <span class="skill-tag">React, Next.js</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Tailwind CSS</span>
+          <span class="skill-tag">TanStack Query / Store</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">BACKEND & DATA</div>
+        <div class="skill-tags">
+            <span class="skill-tag">NodeJS</span>
+            <span class="skill-tag">ExpressJS</span>
+          <span class="skill-tag">NestJS</span>
+          <span class="skill-tag">Prisma</span>
+          <span class="skill-tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">IOT</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ESP32</span>
+          <span class="skill-tag">Arduino</span>
+          <span class="skill-tag">Sensor</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">COMMERCE & INFRA</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Stripe</span>
+          <span class="skill-tag">Supabase</span>
+          <span class="skill-tag">Docker</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <div class="sec-num">03 · projects</div>
+      <div class="sec-title">My projects</div>
+    </div>
+
+    <div class="proj-list">
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">Ebookstore.me</div>
+          <div class="proj-status live">In git hub private repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">เป็นเว็บขาย Ebook Online มีระบบจัดการ Ebook ในตัว Feature เมื่อมีคนเข้ามาซื้อ Ebook จะต้องกรอก Email และชำระเงินผ่าน Stripe payment เมื่อชำระเงินเสร็จไฟล์ Ebook จะถูกส่งให้ทาง Email <a style="text-decoration: underline;" href="https://ebookstore.me/" target="_blank" rel="noopener noreferrer">ebookstore.me</a></div>
+          <div class="proj-tags"><span>Next.js</span><span>Tailwind CSS</span><span>Supabase</span><span>Stripe</span></div>
+        </div>
+        <div class="proj-idx">01</div>
+      </div>
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">13.8</div>
+          <div class="proj-status live">In git hub public repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">เป็นเว็บข่าวเกี่ยวกับอวกาศ มีระบบจัดการ content แยกจากตัวเว็บหลัก <a style="text-decoration: underline;" href="https://github.com/PHUWADON-PHUDON/13.8_web" target="_blank" rel="noopener noreferrer">Git hub</a></div>
+          <div class="proj-tags"><span>React.js</span><span>Express.Js</span><span>CSS</span><span>Prisma + Mysql</span></div>
+        </div>
+        <div class="proj-idx">02</div>
+      </div>
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">Nithan</div>
+          <div class="proj-status live">In git hub public repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">เว็บนิทานสำหรับเด็ก มีระบบจัดการ content ในดัว <a style="text-decoration: underline;" href="https://github.com/PHUWADON-PHUDON/nithan" target="_blank" rel="noopener noreferrer">Git hub</a></div>
+          <div class="proj-tags"><span>Next.js</span><span>Tailwind CSS</span><span>Supabase</span></div>
+        </div>
+        <div class="proj-idx">03</div>
+      </div>
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">Dooduang</div>
+          <div class="proj-status live">In git hub public repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">เว็บดูดวงที่มี animation ของไพ่ Future หลักผู้ใช้เลื่อกไพ่ 10 ใบ และ AI จะทำนายดวงจากไพ่ที่เลือก <a style="text-decoration: underline;" href="https://dooduang-seven.vercel.app/" target="_blank" rel="noopener noreferrer">dooduang</a></div>
+          <div class="proj-tags"><span>Next.js</span><span>CSS</span></div>
+        </div>
+        <div class="proj-idx">04</div>
+      </div>
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">POS</div>
+          <div class="proj-status live">In git hub public repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">ระบบ POS สำหรับร้านค้าขนาดเล็ก รองรับการเชื่อมต่อกับเครื่อง Scanner barcode <a style="text-decoration: underline;" href="https://github.com/PHUWADON-PHUDON/happy_house_shop_frontend" target="_blank" rel="noopener noreferrer">Git hub</a></div>
+          <div class="proj-tags"><span>React.js</span><span>Tailwind CSS</span><span>Nest.js</span></div>
+        </div>
+        <div class="proj-idx">05</div>
+      </div>
+
+      <div class="proj">
+        <div>
+          <div class="proj-name">Pholprakai air service</div>
+          <div class="proj-status live">In git hub public repo</div>
+        </div>
+        <div>
+          <div class="proj-desc">ทำเว็บ Landing page ตาม Design ที่กำหนดของร้านแอร์แห่งหนึ่งในจังหวัดชลบุรี และ รองรับ SEO <a style="text-decoration: underline;" href="https://pholprakai-air-service.vercel.app/" target="_blank" rel="noopener noreferrer">pholprakai air</a></div>
+          <div class="proj-tags"><span>Next.js</span><span>Tailwind CSS</span></div>
+        </div>
+        <div class="proj-idx">06</div>
+      </div>
+
+      <div class="">
+        <a style="text-decoration: underline; margin-top: 30px; display: block; text-align: center;" href="https://github.com/PHUWADON-PHUDON?page=1&tab=repositories" target="_blank" rel="noopener noreferrer">Projects อื่นๆ</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head">
+      <div class="sec-num">04 · contact</div>
+      <div class="sec-title">Contact</div>
+    </div>
+    <div class="contact-box">
+      
+      <div class="contact-links">
+        <a><span class="field">email</span>ppuwdon@gmail.com</a>
+        <a><span class="field">phone</span>092-643-7604</a>
+        <a><span class="field">github</span>github.com/PHUWADON-PHUDON</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>© <span id="year"></span> Plug. Built with a code font, not a code editor.</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
